@@ -1,10 +1,9 @@
-const express = require('express');
+// server/routes/voiceRoute.js
+import express from 'express';
+import { extractIntentFromGemini, generateFromGemini } from '../services/geminiService.js';
+import translate from '@vitalets/google-translate-api';
+
 const router = express.Router();
-const { extractIntentFromGemini, generateFromGemini } = require('../services/geminiService');
-
-const { default: translate } = require('@vitalets/google-translate-api');
-
-//const translate = require('googletrans').default;  // ✅ unofficial google translate
 
 // 🎤 Voice command route with multilingual translation
 router.post('/', async (req, res) => {
@@ -71,4 +70,4 @@ Respond ONLY as a JSON array of item strings with good sentence. Example:
   }
 });
 
-module.exports = router;
+export default router;

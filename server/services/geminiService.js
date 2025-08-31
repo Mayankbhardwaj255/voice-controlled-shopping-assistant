@@ -1,5 +1,6 @@
-const axios = require('axios');
-const db = require('../firebase');  // ✅ Ensure Firebase is already initialized
+// utils/gemini.js
+import axios from "axios";
+import db from "../firebase.js"; // ✅ Ensure Firebase is already initialized
 
 /**
  * Cleans Gemini's JSON output by removing markdown formatting like ```json ... ```
@@ -8,8 +9,8 @@ const db = require('../firebase');  // ✅ Ensure Firebase is already initialize
  */
 function cleanJsonResponse(text) {
   return text
-    .replace(/```json\s*/i, '')
-    .replace(/```/g, '')
+    .replace(/```json\s*/i, "")
+    .replace(/```/g, "")
     .trim();
 }
 
@@ -18,7 +19,7 @@ function cleanJsonResponse(text) {
  * @param {string} userText
  * @returns {Promise<object>}
  */
-async function extractIntentFromGemini(userText) {
+export async function extractIntentFromGemini(userText) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${process.env.GEMINI_MODEL}:generateContent`;
   const apiKey = process.env.GEMINI_API_KEY;
 
@@ -40,7 +41,7 @@ Your task:
    - "size": if mentioned, else "any".
    - "price_range": only for search; object with "min" and "max". If not mentioned, set both to 0.
    - "filters": only for search intent; include keys like brand and size. If not mentioned, set both to "any".
-   - "search_term": user query (e.g., "organic apples").
+   - "search_term": user query (e.g., "organic apple").
 
 ⚠️ Rules:
 - Respond only in raw JSON. No markdown, no explanations.
@@ -104,7 +105,7 @@ The user may speak in Hindi, Marathi, Tamil, or other Indian languages. Translat
  * @param {string} promptText
  * @returns {Promise<string>}
  */
-async function generateFromGemini(promptText) {
+export async function generateFromGemini(promptText) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${process.env.GEMINI_MODEL}:generateContent`;
   const apiKey = process.env.GEMINI_API_KEY;
 
@@ -116,11 +117,9 @@ async function generateFromGemini(promptText) {
     );
 
     const raw = response.data.candidates?.[0]?.content?.parts?.[0]?.text;
-    return raw?.replace(/```json|```/g, '').trim();
+    return raw?.replace(/```json|```/g, "").trim();
   } catch (err) {
-    console.error('❌ Gemini generation failed:', err.message);
-    throw new Error('Gemini generation failed');
+    console.error("❌ Gemini generation failed:", err.message);
+    throw new Error("Gemini generation failed");
   }
 }
-
-module.exports = { extractIntentFromGemini, generateFromGemini };
