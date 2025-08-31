@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+/* @layer theme {
+  :root {
+    --color-bg: white;
+    --color-text: black;
+  }
+
+  .dark {
+    --color-bg: black;
+    --color-text: white;
+  }
+} */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+html.
+body.
+#root {
+    height: 100%;
+}
