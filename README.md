@@ -63,8 +63,7 @@ voice-shopping-assistant/
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/Mayankbhardwaj255/voice-shopping-assistant.git
-cd voice-shopping-assistant
+git clone https://github.com/Mayankbhardwaj255/voice-controlled-shopping-assistant.git .
 ```
 
 ---
